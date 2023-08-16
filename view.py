@@ -1,6 +1,5 @@
 import pygame
 import random
-import time
 
 def print_text(screen, algorithms_name, selected_option):
     for i, option in enumerate(algorithms_name):
@@ -22,7 +21,7 @@ def print_step(screen, array, colored):
     screen.fill((255, 255, 255))
     print_charts(screen, array, colored)
     pygame.display.flip()
-    time.sleep(0.01)
+    pygame.time.wait(10)
 
 def shuffle(array):
     new_array = [-1 for _ in range(len(array))]
