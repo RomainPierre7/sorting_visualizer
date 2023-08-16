@@ -8,6 +8,9 @@ module = importlib.import_module("algorithms")
 algorithms_name = [name for name, obj in inspect.getmembers(module) if inspect.isfunction(obj)]
 algorithms_func = [obj for name, obj in inspect.getmembers(module) if inspect.isfunction(obj)]
 
+n = 50
+array = [i for i in range(1, n + 1)]
+
 pygame.init()
 screen = pygame.display.set_mode((1500, 1000))
 pygame.display.set_caption("Sorting visualizer")
@@ -26,17 +29,14 @@ while running:
                 selected_option = (selected_option - 1) % len(algorithms_name)
             elif event.key == K_RETURN and not algo_running:
                 algo_running = True
-                view.shuffle()
-                algorithms_func[selected_option]()
+                array = view.shuffle(array)
+                array = algorithms_func[selected_option](screen, array)
                 algo_running = False
     
     screen.fill((255, 255, 255))
     
-    for i, option in enumerate(algorithms_name):
-        text_color = (0, 0, 0) if i == selected_option else (100, 100, 100)
-        font = pygame.font.Font(None, 36)
-        text = font.render(option, True, text_color)
-        screen.blit(text, (50, 50 + i * 50))
+    view.print_text(screen, algorithms_name, selected_option)
+    view.print_charts(screen, array, colored=[])
     
     pygame.display.flip()
 
