@@ -21,13 +21,14 @@ def print_step(screen, array, colored):
     screen.fill((255, 255, 255))
     print_charts(screen, array, colored)
     pygame.display.flip()
-    pygame.time.wait(10)
+    pygame.time.wait(20)
 
-def shuffle(array):
-    new_array = [-1 for _ in range(len(array))]
+def shuffle(screen, array):
+    new_array = [0 for _ in range(len(array))]
     for value in array:
         idx = random.randint(0, len(array) - 1)
-        while new_array[idx] != -1:
+        while new_array[idx] != 0:
             idx = random.randint(0, len(array) - 1)
         new_array[idx] = value
+        print_step(screen, new_array, [])
     return new_array
