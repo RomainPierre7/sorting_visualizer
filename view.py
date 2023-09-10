@@ -1,11 +1,18 @@
 import pygame
 import random
 
+complexity = {
+    "bubble_sort": "n²",
+    "insertion_sort": "n²",
+    "selection_sort": "n²",
+    "merge_sort": "n*log(n)"
+}
+
 def print_text(screen, algorithms_name, selected_option):
     for i, option in enumerate(algorithms_name):
         text_color = (0, 0, 0) if i == selected_option else (100, 100, 100)
         font = pygame.font.Font(None, 36)
-        text = font.render(option, True, text_color)
+        text = font.render(option + " (" + complexity[option] + ")", True, text_color)
         screen.blit(text, (50, 50 + i * 50))
 
 def print_charts(screen, array, colored):
