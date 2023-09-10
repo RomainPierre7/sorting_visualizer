@@ -1,7 +1,7 @@
 # sorting_visualizer
 
 ## To launch
-
+After a git clone run the following command :
 ```
 python3 main.py
 ```
