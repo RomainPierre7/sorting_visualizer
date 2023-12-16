@@ -3,7 +3,6 @@ from pygame.locals import *
 import importlib
 import inspect
 import view
-import threading
 
 module = importlib.import_module("algorithms")
 algorithms_name = [name for name, obj in inspect.getmembers(module) if inspect.isfunction(obj)]
@@ -17,11 +16,14 @@ screen = pygame.display.set_mode((1500, 1000))
 pygame.display.set_caption("Sorting visualizer")
 
 def run_algorithm(algorithm_func, screen):
-    global algo_running, array
-    algo_running = True
-    array = view.shuffle(screen, array)
-    array = algorithm_func(screen, array)
-    algo_running = False
+    try:
+        global algo_running, array
+        algo_running = True
+        array = view.shuffle(screen, array)
+        array = algorithm_func(screen, array)
+        algo_running = False
+    except view.StopAlgorithmException:
+        algo_running = False
 
 selected_option = 0
 running = True
@@ -38,8 +40,7 @@ while running:
             elif algo_running:
                 continue
             elif event.key == K_RETURN and not algo_running:
-                algorithm_thread = threading.Thread(target=run_algorithm, args=(algorithms_func[selected_option], screen))
-                algorithm_thread.start()
+                run_algorithm(algorithms_func[selected_option], screen)
     
     if not algo_running:
         screen.fill((255, 255, 255))

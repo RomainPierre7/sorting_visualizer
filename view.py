@@ -8,6 +8,9 @@ complexity = {
     "merge_sort": "n*log(n)"
 }
 
+class StopAlgorithmException(Exception):
+    pass
+
 def print_text(screen, algorithms_name, selected_option):
     for i, option in enumerate(algorithms_name):
         text_color = (0, 0, 0) if i == selected_option else (100, 100, 100)
@@ -29,6 +32,12 @@ def print_step(screen, array, colored):
     print_charts(screen, array, colored)
     pygame.display.flip()
     pygame.time.wait(20)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            raise StopAlgorithmException
 
 def shuffle(screen, array):
     new_array = [0 for _ in range(len(array))]
